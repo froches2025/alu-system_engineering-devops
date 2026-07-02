@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Connecting to the server using RSA key pair
+# Script for creating an RSA key pair
 
-ssh  -i ~/.ssh/school ubuntu@34.226.136.213
-ssh  -i ~/.ssh/school ubuntu@34.226.136.213
+ssh-keygen -b 4096 -f school -t rsa -N betty
