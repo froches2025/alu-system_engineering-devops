@@ -1,10 +1,32 @@
 #!/usr/bin/env bash
-# Configures Nginx to add a custom X-Served-By header set to the server hostname
-apt-get -y update
-apt-get -y install nginx
+# Configures Nginx to match web-01 fully, plus a custom X-Served-By header
+# shellcheck disable=SC2154
+sudo apt-get -y update
+sudo apt-get -y install nginx
 
 echo "Holberton School" > /var/www/html/index.nginx-debian.html
+echo "Ceci n'est pas une page" > /var/www/html/404.html
 
-sed -i '/listen 80 default_server;/a \\tadd_header X-Served-By $hostname;' /etc/nginx/sites-enabled/default
+server_config=\
+"server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+	server_name _;
+	add_header X-Served-By \$hostname;
+	location / {
+		try_files \$uri \$uri/ =404;
+	}
+	if (\$request_filename ~ redirect_me){
+		rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+	}
+	error_page 404 /404.html;
+	location = /404.html {
+		internal;
+	}
+}"
 
-service nginx restart || service nginx start
+echo "$server_config" | sudo tee /etc/nginx/sites-enabled/default > /dev/null
+
+sudo service nginx restart
