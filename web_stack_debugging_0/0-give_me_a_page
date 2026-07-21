@@ -1,0 +1,8 @@
+curl localhost
+apache2 -v
+sudo service apache2 restart
+curl localhost
+vi /etc/apache2/apache2.conf
+ServerName $hostname
+sudo service apache2 restart
+curl localhost
