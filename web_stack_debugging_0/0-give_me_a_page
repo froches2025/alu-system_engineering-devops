@@ -1,8 +1,5 @@
-curl localhost
-apache2 -v
+#!/usr/bin/env bash
+# fixing apache server 
+
+echo "ServerName $hostname" >> /etc/apache2/apache2.conf
 sudo service apache2 restart
-curl localhost
-vi /etc/apache2/apache2.conf
-ServerName $hostname
-sudo service apache2 restart
-curl localhost
