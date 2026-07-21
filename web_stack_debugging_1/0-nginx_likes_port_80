@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # Script to debug faulty server
 
-ln -s  /etc/nginx/sites-available /etc/nginx/sites-enabled
+ln -s  /etc/nginx/sites-available/default /etc/nginx/sites-enabled
 sudo service nginx restart
